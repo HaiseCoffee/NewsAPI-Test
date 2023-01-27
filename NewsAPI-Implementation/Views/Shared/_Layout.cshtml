@@ -1,12 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using NewsAPI.Constants;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NewsAPI_Implementation</title>
+    <title>@ViewData["Title"] - News For You</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NewsAPI_Implementation.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Articles.css" />
 </head>
 <body>
     <header>
@@ -25,6 +27,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <form id="language-form" method="post">
+                            <li class="nav-item">
+                                @Html.DropDownList("Languages",
+                                Html.GetEnumSelectList<Languages>(),
+                                "Select Language",new { @class = "form-control", id = "lang" })
+                            </li>
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                        </form>
                     </ul>
                 </div>
             </div>
@@ -47,3 +57,42 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("language-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var selectedLanguage = document.getElementById("lang").value;
+            debugger;
+            // Make an AJAX request to the controller action
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/Home/ChangeLanguage");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Handle the response from the server
+                    var data = JSON.parse(xhr.responseText)
+                        // Clear the current articles
+                    $('.row').empty();
+                    // Loop through the new articles and append them to the HTML
+                    data.articles.forEach(function(article) {
+                        var articleHtml = '<div class="column">' +
+                                            '<div class="card">' +
+                                            '<img src='+ article.urlToImage +' />' +
+                                            '<h3>' + article.title + '</h3>' +
+                                            '<p>' + article.description + '</p>' +
+                                            '<p>' + article.publishedAt + '</p>' +
+                                            '</div>' +
+                                         '</div>';
+                        $('.row').append(articleHtml);
+                    });
+
+                }
+                else {
+                    // Handle any errors
+                }
+            };
+            xhr.send("Language=" + selectedLanguage);
+        });
+    });
+</script>

@@ -23,12 +23,27 @@ namespace NewsAPI_Implementation.Controllers
         {
             var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
             {
-                Q = "Apple",
+                Q = "World",
                 SortBy = SortBys.Popularity,
-                Language = Languages.EN
+                Language = Languages.ES
             });
         
             return View(articlesResponse);
+        }
+
+        [HttpPost]
+        public JsonResult ChangeLanguage(int language)
+        {
+            var lang = (Languages)language;
+            // Do something with the selected language, such as saving it to the user's session or profile
+            var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
+            {
+                Q = "World",
+                SortBy = SortBys.Popularity,
+                Language = lang
+            });
+
+            return Json(articlesResponse);
         }
 
         public IActionResult Privacy()

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Near\\source\\repos\\NewsAPI-Implementation\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj": {}
+    "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Near\\source\\repos\\NewsAPI-Implementation\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj": {
+    "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Near\\source\\repos\\NewsAPI-Implementation\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj",
+        "projectUniqueName": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj",
         "projectName": "NewsAPI-Implementation",
-        "projectPath": "C:\\Users\\Near\\source\\repos\\NewsAPI-Implementation\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj",
+        "projectPath": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj",
         "packagesPath": "C:\\Users\\Near\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Near\\source\\repos\\NewsAPI-Implementation\\NewsAPI-Implementation\\obj\\",
+        "outputPath": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

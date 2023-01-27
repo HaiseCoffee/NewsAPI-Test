@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ka5XuCYP+ymH1FWApodNOC0r1/7Dud1rZpHAkYIUT8OgEsSkaoCI4eEibo44sOZ3OYzqsoR2n+nlbQlHws2Dww==",
+  "dgSpecHash": "DiOTo4XHdJTFa9zR4jfSqTb7IS/Q+k93kpnKa7znoI+IgJ5Qy88g9SIk/1cx0+hLFNSAoWnL+CvnAeRg84xN3A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Near\\source\\repos\\NewsAPI-Implementation\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj",
+  "projectFilePath": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\NewsAPI-Implementation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Near\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
     "C:\\Users\\Near\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
