@@ -66,3 +66,4 @@ C:\Users\Near\source\repos\Git\NewsAPI-Test\NewsAPI-Implementation\obj\Debug\net
 C:\Users\Near\source\repos\Git\NewsAPI-Test\NewsAPI-Implementation\obj\Debug\net6.0\NewsAPI-Implementation.pdb
 C:\Users\Near\source\repos\Git\NewsAPI-Test\NewsAPI-Implementation\obj\Debug\net6.0\NewsAPI-Implementation.genruntimeconfig.cache
 C:\Users\Near\source\repos\Git\NewsAPI-Test\NewsAPI-Implementation\obj\Debug\net6.0\ref\NewsAPI-Implementation.dll
+C:\Users\Near\source\repos\Git\NewsAPI-Test\NewsAPI-Implementation\bin\Debug\net6.0\System.Security.Permissions.dll

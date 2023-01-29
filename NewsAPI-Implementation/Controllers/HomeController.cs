@@ -4,6 +4,7 @@ using NewsAPI.Models;
 using NewsAPI;
 using NewsAPI_Implementation.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 //TODO: ADD FILTER TO SEARCH BY LANGUAGE
 namespace NewsAPI_Implementation.Controllers
@@ -43,7 +44,23 @@ namespace NewsAPI_Implementation.Controllers
                 Language = lang
             });
 
+            HttpContext.Session.SetInt32("Language", language);
             return Json(articlesResponse);
+        }
+
+        [HttpGet]
+        public ActionResult SearchTopic (string searchValue)
+        {
+            var languages = (Languages)HttpContext.Session.GetInt32("Language");
+
+            var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
+            {
+                Q = searchValue,
+                SortBy = SortBys.Popularity,
+                Language = languages != null ? languages : Languages.ES
+            });
+
+            return View("Index", articlesResponse);
         }
 
         public IActionResult Privacy()

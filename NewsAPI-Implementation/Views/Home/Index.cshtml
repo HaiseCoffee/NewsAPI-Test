@@ -5,11 +5,19 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <div class="row">
-        @foreach(var article in Model.Articles)
+        @if(Model.Articles != null)
         {
-            <div class="column">
-                @Html.Partial("_Article", article)
-            </div>
+            foreach(var article in Model.Articles)
+            {
+                <div class="column">
+                    @Html.Partial("_Article", article)
+                </div>
+            }
+        } 
+        else
+        {
+            <h1 class="display-4">Error</h1>
+            <p>There are currently no news about this topic.</p>
         }
     </div>
 </div>
