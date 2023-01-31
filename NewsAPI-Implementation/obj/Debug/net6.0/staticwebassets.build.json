@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RFxqGcVT0dZspK5ibmt8MGZ+Nyje5JTUYgBBJeGZfww=",
+  "Hash": "hWP9knyFllC8dH3QKOoom/4vMs5R78PKG3WH2/FKeUw=",
   "Source": "NewsAPI-Implementation",
   "BasePath": "_content/NewsAPI-Implementation",
   "Mode": "Default",
@@ -66,6 +66,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Articles.css"
+    },
+    {
+      "Identity": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\wwwroot\\css\\Login.css",
+      "SourceId": "NewsAPI-Implementation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\wwwroot\\",
+      "BasePath": "_content/NewsAPI-Implementation",
+      "RelativePath": "css/Login.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Login.css"
     },
     {
       "Identity": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\wwwroot\\css\\site.css",

@@ -1,0 +1,45 @@
+﻿<link rel="stylesheet" href="~/css/Login.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<div>
+    <input type="button" class="btn btn-success" value="Login" onclick="showLogin()" />
+    <input type="button" class="btn btn-success" value="Register" onclick="showRegister()" />
+
+</div>
+<div class="log-form">
+  <div id="login">
+    <h2>Login to your account</h2>
+    <form controller="User" asp-action="LoginUser" method="post">
+        <input type="text" required id="user" name="user" title="username" placeholder="username" />
+        <input type="password" required id="password" name="pass" title="username" placeholder="password" />
+        <button type="submit" class="btn">Login</button>
+        <a class="forgot" href="#">Forgot Username?</a>
+    </form>
+  </div>
+
+  <div id="register" style="display: none;">
+    <h2>Register to your account</h2>
+    <form controller="User" asp-action="RegisterUser" method="post">
+        <input type="text" required id="user" name="user" title="username" placeholder="username" />
+        <input type="email" required id="email" name="email" title="email" placeholder="email" />
+        <input type="password" required id="password" name="pass" title="username" placeholder="password" />
+        <button type="submit" class="btn">Register</button>
+    </form>
+  </div>
+  
+</div>
+
+<script>
+    function showLogin() {
+        $('#login').css('display', 'block')
+        $('#register').css('display', 'none')
+
+    }
+
+    function showRegister() {
+        $('#login').css('display', 'none')
+        $('#register').css('display', 'block')
+
+    }
+
+</script>

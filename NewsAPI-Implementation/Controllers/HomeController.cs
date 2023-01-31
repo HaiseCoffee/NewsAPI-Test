@@ -28,6 +28,12 @@ namespace NewsAPI_Implementation.Controllers
                 SortBy = SortBys.Popularity,
                 Language = Languages.ES
             });
+
+            int i = 1;
+            foreach (var article in articlesResponse.Articles) {
+                article.Source.Id = i.ToString();
+                i++;
+            }
         
             return View(articlesResponse);
         }

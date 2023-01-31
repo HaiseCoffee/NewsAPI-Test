@@ -1,4 +1,10 @@
 ﻿@using NewsAPI.Constants;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +15,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NewsAPI_Implementation.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Articles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <body>
     <header>
@@ -38,8 +47,20 @@
                     </ul>
                 </div>
             </div>
-            <div style="display:flex;">
-                <form id="search-form" asp-controller="Home" asp-action="SearchTopic" method="get">
+            @if (username == null)
+            {
+                <div>
+                    <a class="fa fa-user mr-3" style="color: darkgreen;" href="@Url.Action("Login", "User")"></a>
+                </div>
+            } 
+            else
+            {
+                <div>
+                    <a class="fa fa-sign-out mr-3" style="color: darkred;" href="@Url.Action("LogOut", "User")"></a>
+                </div>
+            }
+            <div>
+                <form style="display: flex;" id="search-form" asp-controller="Home" asp-action="SearchTopic" method="get">
                     <input class="form-control" type="text" required name="searchValue" />
                     <input type="submit" value="Search" class="btn btn-primary" style="margin-left:10px" />
                 </form>

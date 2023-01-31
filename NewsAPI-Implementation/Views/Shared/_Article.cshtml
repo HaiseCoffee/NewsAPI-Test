@@ -1,6 +1,13 @@
 ﻿@using NewsAPI.Models;
 @model Article
 <link rel="stylesheet" href="~/css/Articles.css" />
+@{
+    var sourceId = Model.Source.Id;
+}
+@if(sourceId != null)
+{
+    <i class="fa fa-heart empty-heart" id="heart-@sourceId"></i>
+}
 <a href="@Url.Action("ExpandedArticle", "Article", new { art = Model })">
     <div class="card">
         <img src="@Model.UrlToImage" />
@@ -9,3 +16,14 @@
         <p>@Model.PublishedAt</p>
     </div>
 </a>
+
+<script>
+    (function() {
+      const heart = document.getElementById(`heart-${@sourceId}`);
+      heart.addEventListener('click', function() {
+          debugger
+          $(`#heart-${@sourceId}`).css('color', 'red');
+      });
+    })();
+
+</script>

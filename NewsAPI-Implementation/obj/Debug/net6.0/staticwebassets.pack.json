@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\Articles.css"
     },
     {
+      "Id": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
+    },
+    {
       "Id": "C:\\Users\\Near\\source\\repos\\Git\\NewsAPI-Test\\NewsAPI-Implementation\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

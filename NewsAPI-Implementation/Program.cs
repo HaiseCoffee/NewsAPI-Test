@@ -1,3 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using NewsAPI_Implementation.Data;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.AspNetCore.Hosting;
+
+var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .Build();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,12 +16,24 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+// Add the IConfiguration service and configure it to read from appsettings.json
+builder.Services.AddSingleton(new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build());
+
+builder.Services.AddDbContext<MyDbContext>(options =>
+    options.UseSqlServer(
+        config.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
