@@ -1,12 +1,26 @@
 ﻿@using NewsAPI.Models;
 @model ArticlesResult
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+}
 <link rel="stylesheet" href="~/css/Articles.css" />
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if(username != null)
+    {
+        <div class="pagination">
+        @if (ViewBag.Page > 1)
+        {
+            <a href="@Url.Action("Index", "Home", new { page = ViewBag.Page - 1 })" class="previous">&laquo; Previous</a>
+        }
+            <a href="@Url.Action("Index", "Home", new { page = ViewBag.Page + 1 })" class="next">Next &raquo;</a>
+        </div>
+    }
+
     <div class="row">
         @if(Model.Articles != null)
         {
+
             foreach(var article in Model.Articles)
             {
                 <div class="column">
@@ -21,3 +35,26 @@
         }
     </div>
 </div>
+
+<style>
+    .pagination a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+    }
+
+        .pagination a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+    .previous {
+        background-color: #f1f1f1;
+        color: black;
+    }
+
+    .next {
+        background-color: #04AA6D;
+        color: white;
+    }
+</style>

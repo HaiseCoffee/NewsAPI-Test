@@ -2,9 +2,13 @@
 using NewsAPI.Constants;
 using NewsAPI.Models;
 using NewsAPI;
+using NewsAPI_Implementation.Controllers;
 using NewsAPI_Implementation.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using NewsAPI_Implementation.Services;
+using Braintree;
+using NewsAPI_Implementation.Data;
 
 //TODO: ADD FILTER TO SEARCH BY LANGUAGE
 namespace NewsAPI_Implementation.Controllers
@@ -15,18 +19,30 @@ namespace NewsAPI_Implementation.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IBraintreeService _braintreeService;
+
+        private MyDbContext _context;
+
+        private CommonMethods _commonMethods;
+
+
+        public HomeController(ILogger<HomeController> logger, IBraintreeService braintreeService, MyDbContext context)
         {
             _logger = logger;
+            _braintreeService = braintreeService;
+            _context = context;
+            _commonMethods = new CommonMethods(context);
         }
-
-        public IActionResult Index()
+        
+        public IActionResult Index(int page = 1, int pageSize = 10)
         {
             var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
             {
                 Q = "World",
                 SortBy = SortBys.Popularity,
-                Language = Languages.ES
+                Language = GetLanguage(),
+                Page = !IsLoggedIn() ? 1 : page,
+                PageSize = pageSize
             });
 
             int i = 1;
@@ -34,7 +50,9 @@ namespace NewsAPI_Implementation.Controllers
                 article.Source.Id = i.ToString();
                 i++;
             }
-        
+            
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(articlesResponse);
         }
 
@@ -42,7 +60,8 @@ namespace NewsAPI_Implementation.Controllers
         public JsonResult ChangeLanguage(int language)
         {
             var lang = (Languages)language;
-            // Do something with the selected language, such as saving it to the user's session or profile
+            _commonMethods.ChangeUserLanguage(HttpContext.Session.GetString("Username"), lang);
+            HttpContext.Session.SetInt32("PreferedLanguage", language);
             var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
             {
                 Q = "World",
@@ -50,23 +69,66 @@ namespace NewsAPI_Implementation.Controllers
                 Language = lang
             });
 
-            HttpContext.Session.SetInt32("Language", language);
             return Json(articlesResponse);
         }
 
         [HttpGet]
         public ActionResult SearchTopic (string searchValue)
         {
-            var languages = (Languages)HttpContext.Session.GetInt32("Language");
-
             var articlesResponse = newsApiClient.GetEverything(new EverythingRequest
             {
                 Q = searchValue,
                 SortBy = SortBys.Popularity,
-                Language = languages != null ? languages : Languages.ES
+                Language = GetLanguage()
             });
 
             return View("Index", articlesResponse);
+        }
+
+        public IActionResult GetPremium()
+        {
+            if (IsLoggedIn())
+            {
+                var gateway = _braintreeService.GetGateway();
+                var clientToken = gateway.ClientToken.Generate();  //Genarate a token
+                ViewBag.ClientToken = clientToken;
+                var data = new UserPurchaseVM
+                {
+                    Nonce = ""
+                };
+
+                return View(data);
+            } else
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Payment(UserPurchaseVM us)
+        {
+            var gateway = _braintreeService.GetGateway();
+            var request = new TransactionRequest
+            {
+                Amount = Convert.ToDecimal("10"),
+                PaymentMethodNonce = us.Nonce,
+                Options = new TransactionOptionsRequest
+                {
+                    SubmitForSettlement = true
+                }
+            };
+
+            Result<Transaction> result = gateway.Transaction.Sale(request);
+
+            if (result.IsSuccess())
+            {
+                _commonMethods.UpdateUserPremium(HttpContext.Session.GetString("Username"));
+                return View("Success");
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         public IActionResult Privacy()
@@ -78,6 +140,19 @@ namespace NewsAPI_Implementation.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private Languages GetLanguage()
+        {
+            int? preferedLanguage = HttpContext.Session.GetInt32("PreferedLanguage");
+            var languages = preferedLanguage.HasValue ? (Languages)preferedLanguage.Value : Languages.ES;
+
+            return languages;
+        }
+
+        private bool IsLoggedIn()
+        {
+            return HttpContext.Session.GetString("Username") != null;
         }
     }
 }

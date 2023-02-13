@@ -3,6 +3,7 @@ using NewsAPI_Implementation.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.AspNetCore.Hosting;
+using NewsAPI_Implementation.Services;
 
 var config = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
@@ -34,6 +35,7 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(
         config.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddTransient<IBraintreeService, BraintreeService>();
 
 var app = builder.Build();
 

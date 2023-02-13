@@ -4,6 +4,8 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var isPremiumBytes = HttpContextAccessor.HttpContext.Session.Get("IsPremium");
+    var isPremium = isPremiumBytes != null ? BitConverter.ToBoolean(isPremiumBytes, 0) : false;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -36,14 +38,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <form id="language-form" method="post" style="display:flex;">
-                            <li class="nav-item">
-                                @Html.DropDownList("Languages",
-                                Html.GetEnumSelectList<Languages>(),
-                                "Select Language",new { @class = "form-control", id = "lang" })
-                            </li>
-                            <input type="submit" value="Change" class="btn btn-primary" style="margin-left:10px" />
-                        </form>
+                        @if(username != null)
+                        {
+                            if(!isPremium)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-success" asp-area="" asp-controller="Home" asp-action="GetPremium">Get Premium!</a>
+                                </li>
+                            }
+                            <form id="language-form" method="post" style="display:flex;">
+                                <li class="nav-item">
+                                    @Html.DropDownList("Languages",
+                                    Html.GetEnumSelectList<Languages>(),
+                                    "Select Language",new { @class = "form-control", id = "lang" })
+                                </li>
+                                <input type="submit" value="Change" class="btn btn-primary" style="margin-left:10px" />
+                            </form>
+                        }
                     </ul>
                 </div>
             </div>

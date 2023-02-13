@@ -1,12 +1,18 @@
 ﻿@using NewsAPI.Models;
 @model Article
+@inject IHttpContextAccessor HttpContextAccessor
+
 <link rel="stylesheet" href="~/css/Articles.css" />
 @{
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
     var sourceId = Model.Source.Id;
 }
-@if(sourceId != null)
+@if(username != null)
 {
-    <i class="fa fa-heart empty-heart" id="heart-@sourceId"></i>
+    if(sourceId != null)
+    {
+        <i class="fa fa-heart empty-heart" id="heart-@sourceId"></i>
+    }
 }
 <a href="@Url.Action("ExpandedArticle", "Article", new { art = Model })">
     <div class="card">
@@ -21,7 +27,6 @@
     (function() {
       const heart = document.getElementById(`heart-${@sourceId}`);
       heart.addEventListener('click', function() {
-          debugger
           $(`#heart-${@sourceId}`).css('color', 'red');
       });
     })();

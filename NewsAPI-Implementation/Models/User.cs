@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NewsAPI.Constants;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NewsAPI_Implementation.Models
@@ -15,6 +16,7 @@ namespace NewsAPI_Implementation.Models
         [Required]
         public string Email { get; set; }
         public bool IsPremium { get; set; }
+        public Languages PreferedLanguage { get; set; }
 
         public void HashPassword()
         {
@@ -30,6 +32,7 @@ namespace NewsAPI_Implementation.Models
             Password = password;
             Email = email;
             IsPremium = false;
+            PreferedLanguage = Languages.ES;
         }
     }
 }
